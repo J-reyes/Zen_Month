@@ -86,7 +86,8 @@ export default class LinksScreen extends React.Component {
           renderItem={({item}) => 
           <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')}>
             <View style={{backgroundColor: 'red'}}>
-              <Text>{item.goal}</Text>
+              <Text>Goal: {item.goal}</Text>
+              <Text>Description: {item.description}</Text>
             </View>
           </TouchableHighlight>}
           />
