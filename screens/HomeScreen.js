@@ -9,7 +9,7 @@ import {
   View,
   Button
 } from 'react-native';
-
+import CreateGoal from '../components/CreateGoal';
 import { MonoText } from '../components/StyledText';
 
 import firebase from '../Firebase/firebase';
@@ -24,12 +24,6 @@ export default class HomeScreen extends React.Component {
       currentUser: null
     }
   }
-
-  // static navigationOptions = {
-  //   header: null,
-  //   errorMessage: null,
-  //   currentUser: null
-  // };
 
   handleSignOut  = () => {
     console.log(firebase.auth());
@@ -71,8 +65,9 @@ export default class HomeScreen extends React.Component {
             <Text style={styles.getStartedText}>
               {currentUser && currentUser.email}
             </Text>
+           
           </View>
-
+          <CreateGoal />
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
@@ -87,8 +82,7 @@ export default class HomeScreen extends React.Component {
             <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
           </View>
           
-          <Button onPress={this.handleSignOut} title="Sign Out"/>
-
+          <Button onPress={this.handleSignOut} title="Sign Out"/>    
         </View>
       </View>
     );
