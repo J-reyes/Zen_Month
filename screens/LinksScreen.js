@@ -3,15 +3,13 @@
 import React from 'react';
 import { 
     View,
-    ScrollView, 
     StyleSheet, 
     Text,
     ActivityIndicator,
     FlatList,
-    TouchableHighlight,
-    Button,
-    Icon 
+    TouchableHighlight
 } from 'react-native';
+import { Card, Icon, Button } from 'react-native-elements';
 import firebase from '../Firebase/firebase';
 
 // import { ExpoLinksView } from '@expo/samples';
@@ -81,15 +79,23 @@ export default class LinksScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Text>Goals</Text>
           <FlatList 
           data={this.state.goals}
           renderItem={({item}) => 
-          <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')}>
-            <View style={{backgroundColor: 'red'}}>
-              <Text>Goal: {item.goal}</Text>
-              <Text>Description: {item.description}</Text>
-            </View>
-          </TouchableHighlight>}
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')}>
+              <Card>
+                <View style={{backgroundColor: 'red'}}>
+                  <Text>Goal: {item.goal}</Text>
+                  <Text>Description: {item.description}</Text>
+                </View>
+                <Button
+                icon={<Icon name='code' color='#ffffff' />}
+                backgroundColor='#03A9F4'
+                buttonStyle={{borderRadius: 30, marginLeft: 30, marginRight: 30, marginBottom: 30}}
+                title='Details' />
+              </Card>  
+            </TouchableHighlight>}
           />
       </View>
     );
