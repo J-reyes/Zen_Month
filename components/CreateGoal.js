@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import firebase from '../Firebase/firebase'
 
-db = firebase.firestore().collection('goals');
+
 export default class CreateGoal extends React.Component {
     constructor() {
         super();
         this.state = { 
            goal: '',
-           description: '',
+           description: '', 
+           created: ''
         }
     }
 
@@ -26,14 +27,17 @@ export default class CreateGoal extends React.Component {
     }
 
     saveGoal = () => {
-        console.log(this.state.goal)
+        const date = new Date();
+        db = firebase.firestore().collection('goals');
         db.add({
             goal: this.state.goal,
-            description: this.state.description
+            description: this.state.description,
+            created: date.toDateString()
         }).then((docRef) => {
             this.setState({
                 goal: '',
                 description: '',
+                created: ''
             });
             // add navigation ? maybe in future
         })
@@ -50,12 +54,14 @@ export default class CreateGoal extends React.Component {
                 <TextInput 
                     style={styles.itemInput} 
                     // onChangeText={this.handleChange('goal')}
+                    title="Goal: "
                     value={this.state.goal} 
                     onChangeText={(text) => this.updateTextInput(text, 'goal')}
                 />
                 <TextInput 
                     style={styles.itemInput} 
                     // onChangeText={this.handleChange('name')}
+                    title="Description: "
                     value={this.state.description} 
                     onChangeText={(text) => this.updateTextInput(text, 'description')}
                 />

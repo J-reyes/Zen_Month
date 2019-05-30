@@ -29,48 +29,30 @@ export default class LinksScreen extends React.Component {
     };
   }
 
-  //extract fb response to state
-  // onCollectionUpdate = () => {
-  //   const goals = [];
-  //   db.get().then(function(querySnapshot){
-  //     querySnapshot.forEach((doc) => {
-  //       console.log("id" + doc.id,  doc.data(), doc.data().goal)
-  //       // const { goal, description } = doc.data();
-  //       goals.push({
-  //         key: doc.id,
-  //         doc,
-  //         goal: doc.data().goal,
-  //         description: doc.data().description
-  //       });
-  //     })
-
-  //   })
-  // }
+  
 
   onCollectionUpdate = (querySnapshot) => {
     const goals = [];
+
     querySnapshot.forEach((doc) => {
       console.log("id" + doc.id,  doc.data(), doc.data().goal)
-      const { goal, description } = doc.data();
+      const { goal, description, created } = doc.data();
       goals.push({
         key: doc.id,
         doc, // DocumentSnapshot
         goal,
         description,
+        created
       });
     });
     this.setState({
       goals,
       loading: false,
    });
-   console.log(this.state.goals[1].goal);
-   console.log(this.state.loading);
-  
   }
 
   componentDidMount() {
    this.unsubscribe = db.onSnapshot(this.onCollectionUpdate)
-   console.log(this.unsubscribe)
   }
 
   render() {
@@ -88,13 +70,14 @@ export default class LinksScreen extends React.Component {
                 <View style={{backgroundColor: 'red'}}>
                   <Text>Goal: {item.goal}</Text>
                   <Text>Description: {item.description}</Text>
+                  <Text>Time: {item.created}</Text>
+                  <Button
+                  icon={<Icon name='code' color='#ffffff' />}
+                  backgroundColor='#03A9F4'
+                  buttonStyle={{borderRadius: 30, marginLeft: 30, marginRight: 30, marginTop: 15}}
+                  title='Details' />
                 </View>
-                <Button
-                icon={<Icon name='code' color='#ffffff' />}
-                backgroundColor='#03A9F4'
-                buttonStyle={{borderRadius: 30, marginLeft: 30, marginRight: 30, marginBottom: 30}}
-                title='Details' />
-              </Card>  
+              </Card> 
             </TouchableHighlight>}
           />
       </View>

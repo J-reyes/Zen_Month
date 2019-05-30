@@ -8,6 +8,7 @@ export default class SignUpScreen extends React.Component {
       this.state = {
           email: '',
           password: '',
+          id: '',
           errorMessage: null
         }
     }
@@ -20,8 +21,18 @@ export default class SignUpScreen extends React.Component {
                 alert("Password must have a length of 6 characters")
                 return;
             }
-
-            firebase.auth().createUserWithEmailAndPassword(email, password)
+            
+            firebase.auth().createUserWithEmailAndPassword(email, password).then(cred => {
+            db = firebase.firestore().collection('users');
+             var userObj = cred.user
+            //  var userUid = auth.currentUser.uid;
+             console.log("CREDENTIALS: " + userObj.email);
+             console.log("ID: " + userObj.uid);
+             db.add({
+               email: userObj.email,
+               id: userObj.uid
+             })
+            })
             .then(() => this.props.navigation.navigate('Home'))
             .catch(error => this.setState({errorMessage: error.message}))
      }
